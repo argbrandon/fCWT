@@ -8,7 +8,7 @@ fcwt::Morlet::Morlet(const float bandwidth): fb(bandwidth) {
 }
 
 int fcwt::Morlet::getSupport(const float scale) const noexcept {
-    return static_cast<int>(scale * 3.0f);
+    return static_cast<int>(scale * 5.0f);
 }
 
 void fcwt::Morlet::generate(const int size) noexcept {
