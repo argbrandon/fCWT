@@ -12,7 +12,7 @@ def cwt(input, fs, f0, f1, fn, nthreads=1, scaling="lin", fast=False, norm=True)
     if input.dtype != 'single':
         input = input.astype('single')
 
-    morl = Morlet(2.0) #use Morlet wavelet with a wavelet-parameter of 2.0
+    morl = Morlet(1.0) #use Morlet wavelet with a wavelet-parameter of 1.0
 
     #Generate scales
 

@@ -40,7 +40,7 @@ limitations under the License.
 
 Morlet::Morlet(float bandwidth) {
     four_wavelen = 0.9876f;
-    fb = bandwidth;
+    fb = 1.0f;
     fb2 = 2.0f*fb*fb;
     ifb = 1.0f/fb;
     imag_frequency = false;
@@ -52,32 +52,34 @@ void Morlet::generate(int size) {
     //Frequency domain, because we only need size. Default scale is always 2;
     width = size;
     
-    float tmp1;
+    float tmp1, tmp2;
     float toradians = (2*PI)/(float)size;
-    float norm = sqrt(2*PI)*IPI4;
+    float norm = CONST * sqrtPI_2;
     
     mother = (float*)malloc(sizeof(float)*width);
     
     //calculate array
     for(int w = 0; w < width; w++) {
-        tmp1 = (2.0f * ((float)w * toradians) * fb - 2.0f*PI*fb);
+        tmp1 = (2.0f * ((float)w * toradians) - 5.0f);
         tmp1 = -(tmp1 * tmp1)/2;
-        mother[w] = (norm*exp(tmp1));
+        tmp2 = (2.0f * ((float)w * toradians) + 5.0f);
+        tmp2 = -(tmp2 * tmp2)/2;
+        mother[w] = norm*(exp(tmp1) + exp(tmp2));
     }
 }
 void Morlet::generate(float* real, float* imag, int size, float scale) {
     //Time domain because we know size from scale
     float tmp1, tmp2;
     width = getSupport(scale);
-    float norm = (float)size * ifb * IPI4;
+    float norm = (float)size * CONST;
     
     //cout << scale << " [";
     for(int t=0; t < width*2+1; t++) {
         tmp1 = (float)(t - width)/scale;
-        tmp2 = exp(-(tmp1*tmp1)/(fb2));
+        tmp2 = exp(-(tmp1*tmp1)/(2.0f));
         
-        real[t] = norm*tmp2*cos(tmp1*2.0f*PI)/scale;
-        imag[t] = norm*tmp2*sin(tmp1*2.0f*PI)/scale;
+        real[t] = norm*tmp2*cos(5.0f * tmp1)/scale;
+        imag[t] = 0.0f;
         //cout << real[t]*real[t]+imag[t]*imag[t] << ",";
     }
     //cout << "]" << endl;

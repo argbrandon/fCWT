@@ -54,7 +54,7 @@ public:
     
     void generate(int size); //frequency domain
     void generate(float* real, float* imag, int size, float scale); //time domain
-    int getSupport(float scale) { return (int)(fb*scale*3.0f); };
+    int getSupport(float scale) { return (int)(scale*3.0f); };
     void getWavelet(float scale, complex<float>* pwav, int pn);
     float fb;
 };

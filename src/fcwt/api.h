@@ -53,6 +53,8 @@ limitations under the License.
 #define PI                    3.14159265358979323846264338327950288419716939937510582097494459072381640628620899862803482534211706798f
 #define sqrt2PI               2.50662827463100050241576528f
 #define IPI4                  0.75112554446f
+#define CONST                 1.0622519320198f
+#define sqrtPI_2              1.2533141373155f
 
 
 #include "wavelet.h"
